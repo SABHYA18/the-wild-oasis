@@ -22,7 +22,7 @@ const Form = styled.form`
   font-size: 1.4rem;
 `;
 
-form.defaultProps = {
+Form.defaultProps = {
   type: "regular",
 };
 
