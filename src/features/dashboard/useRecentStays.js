@@ -6,20 +6,20 @@ import { getStaysAfterDate } from "../../services/apiBookings";
 export function useRecentStays() {
   const [searchParams] = useSearchParams();
 
-  const numsDays = !searchParams.get("last")
+  const numDays = !searchParams.get("last")
     ? 7
     : Number(searchParams.get("last"));
 
-  const queryDate = subDays(new Date(), numsDays).toISOString();
+  const queryDate = subDays(new Date(), numDays).toISOString();
 
   const { isLoading, data: stays } = useQuery({
     queryFn: () => getStaysAfterDate(queryDate),
-    queryKey: ["stays", `last-${numsDays}`],
+    queryKey: ["stays", `last-${numDays}`],
   });
 
   const confirmedStays = stays?.filter(
     (stay) => stay.status === "checked-in" || stay.status === "checked-out"
   );
 
-  return { isLoading, stays, confirmedStays };
+  return { isLoading, stays, confirmedStays, numDays };
 }
